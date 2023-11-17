@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Reviews";
+    @model IEnumerable<Review>
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <form asp-controller="Home" asp-action="Sorting" method="post" asp-route-id="1">
+        <input type="submit" value="По умолчанию" />
+    </form>
+</p>
+<p>
+    <form asp-controller="Home" asp-action="Sorting" method="post" asp-route-id="2">
+        <input type="submit" value="Сначала хорошие" />
+    </form>
+</p>
+<p>
+    <form asp-controller="Home" asp-action="Sorting" method="post" asp-route-id="3">
+        <input type="submit" value="Сначала плохие" />
+    </form>
+</p>
+@if(Model != null && Model.Any())
+{
+    <table>
+        <tr><th>Отзыв</th><th>Оценка</th></tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Text</td>
+                    <td>@item.Rating</td>
+                </tr>
+            }
+
+    </table>
+}

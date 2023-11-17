@@ -1,0 +1,12 @@
+﻿@model aspnet.Models.Review
+
+<h2>Редактирование отзыва</h2>
+<form asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Id">
+    <p>
+        <label asp-for="Text">Текст отзыва</label><br />
+        <input type="text" width="400" Height="200" asp-for="Text" />
+    </p>
+    <p>
+        <input type="submit" value="Сохранить" />
+    </p>
+</form>
