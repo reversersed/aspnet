@@ -4,8 +4,9 @@ namespace aspnet.Models
 {
     public sealed class dbModel : DbContext
     {
-        private readonly string _connectionString = "Server=localhost; Username=postgres; Password=1q2w3e$; Database=FilmFlow;";
+        private readonly string _connectionString = "Server=localhost; Username=postgres; Password=123; Database=FilmFlow;";
         public DbSet<Review> reviews { get; set; }
+        public DbSet<Movie> movies { get; set; }
         public dbModel()
         {
             Database.EnsureCreated();

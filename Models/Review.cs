@@ -12,5 +12,7 @@ namespace aspnet.Models
         public string? Text { get; set; }
         [Column("rating")]
         public float Rating { get; set; }
+        [Column("movie")]
+        public int MovieId { get; set; }
     }
 }

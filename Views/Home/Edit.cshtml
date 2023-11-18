@@ -1,10 +1,28 @@
 ﻿@model aspnet.Models.Review
+@{
+    IEnumerable<Movie> movies = ViewData["Movies"] as IEnumerable<Movie>;
+}
 
 <h2>Редактирование отзыва</h2>
 <form asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Id">
     <p>
         <label asp-for="Text">Текст отзыва</label><br />
-        <input type="text" width="400" Height="200" asp-for="Text" />
+        <input type="text" width="400" Height="200" asp-for="Text" /><br />
+        <label asp-for="MovieId">Фильм</label><br />
+        <select asp-for="MovieId">
+            @foreach (Movie m in movies)
+            {
+                if (m.Id == Model.MovieId)
+                {
+                    <option selected value="@m.Id">@m.Name</option>
+                }
+                else
+                {
+                    <option value="@m.Id">@m.Name</option>
+                }
+            }
+        </select>
+        <input type="hidden" asp-for="Rating"/>
     </p>
     <p>
         <input type="submit" value="Сохранить" />

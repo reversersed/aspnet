@@ -2,9 +2,9 @@
 {
     public interface IReviewRepository
     {
-        List<Review> GetReviews(int offset = 0, int limit = 0);
+        List<Review> GetReviews(int offset = 0, int limit = 0, int movie = 0);
         void DeleteReview(int id);
-        void SetReviewText(int id, string text);
+        void SetReview(Review review);
         void CreateReview(Review review);
         Review GetReview(int id);
     }

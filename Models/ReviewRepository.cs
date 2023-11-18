@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -62,24 +63,23 @@ namespace aspnet.Models
             }
         }
 
-        public List<Review> GetReviews(int offset = 0, int limit = 0)
+        public List<Review> GetReviews(int offset = 0, int limit = 0, int movie = 0)
         {
             List<Review> reviews = new List<Review>();
             using(dbModel db=new())
             {
-                foreach (var rev in db.reviews.OrderByDescending(i => i.Id).Skip(offset).Take(limit).ToList())
+                foreach (var rev in movie == 0 ?    db.reviews.OrderByDescending(i => i.Id).Skip(offset).Take(limit).ToList() :
+                                                    db.reviews.Where(x => x.MovieId == movie).OrderByDescending(i => i.Id).Skip(offset).Take(limit).ToList())
                     reviews.Add(rev);
             }
             return reviews;
         }
 
-        public void SetReviewText(int id, string text)
+        public void SetReview(Review review)
         {
             using(dbModel db= new())
             {
-                Review r = db.reviews.Where(i => i.Id == id).First();
-                r.Text = text;
-                db.reviews.Update(r);
+                db.reviews.Update(review);
                 db.SaveChanges();
             }
         }

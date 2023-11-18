@@ -1,25 +1,46 @@
 ﻿@{
     ViewData["Title"] = "CRUD";
-    @model IEnumerable<Review>
+    @model IEnumerable<Review>;
+    IEnumerable<Movie> movies = ViewData["Movies"] as IEnumerable<Movie>;
+    Movie movie = ViewData["SelectedMovie"] as Movie;
 }
 
 <div class="text-center">
     <h1 class="display-4">Data CRUD</h1>
 </div>
 <p><a asp-action="Create">Создать отзыв</a></p>
-<table>
-    <tr><th>Отзыв</th><th>Оценка</th><th></th><th></th></tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Text</td>
-            <td>@item.Rating</td>
-            <td><a asp-action="Edit" asp-controller="Home" asp-route-id="@item.Id">Редактировать</a></td>
-            <td>
-                <form asp-controller="Home" asp-action="Delete" method="post" asp-route-id="@item.Id">
-                    <input type="submit" value="Удалить" />
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+<form asp-controller="Home" asp-for="@movie.Id" asp-action="Index" method="get">
+    <select asp-for="@movie">
+        @foreach(Movie m in movies)
+        {
+            if(m.Id == movie?.Id)
+            {
+                <option selected value="@m.Id">@m.Name</option>
+            }
+            else
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        }
+    </select>
+    <input type="submit" value="Выбрать"/>
+</form>
+@if (Model != null && Model.Any())
+{
+    <table>
+        <tr><th>Отзыв</th><th>Оценка</th><th></th><th></th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Text</td>
+                <td>@item.Rating</td>
+                <td><a asp-action="Edit" asp-controller="Home" asp-route-id="@item.Id">Редактировать</a></td>
+                <td>
+                    <form asp-controller="Home" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}

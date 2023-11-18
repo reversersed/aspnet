@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Reviews";
     @model IEnumerable<Review>
+    IEnumerable<Movie> movies = ViewData["Movies"] as IEnumerable<Movie>;
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -22,13 +23,21 @@
 @if(Model != null && Model.Any())
 {
     <table>
-        <tr><th>Отзыв</th><th>Оценка</th></tr>
+        <tr><th>Отзыв</th><th>Оценка</th><th>Фильм</th></tr>
 
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@item.Text</td>
                     <td>@item.Rating</td>
+                    @foreach (var i in movies)
+                    {
+                        if (i.Id == item.MovieId)
+                        {
+                            <td>@i.Name</td>
+                            break;
+                        }
+                    }
                 </tr>
             }
 

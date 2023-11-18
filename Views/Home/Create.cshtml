@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Create";
+    IEnumerable<Movie> movies = ViewData["Movies"] as IEnumerable<Movie>;
     @model aspnet.Models.Review
 }
 
@@ -8,11 +9,20 @@
 <form asp-action="CreateReview" asp-controller="Home">
     <p>
         <label asp-for="Text">Текст отзыва</label><br />
-        <input maxlength="500" width="200" type="text" asp-for="Text"/>
+        <input maxlength="500" width="200" type="text" asp-for="Text" required />
     </p>
     <p>
         <label asp-for="Rating">Оценка</label><br />
-        <input step="0.5" max="5" value="0.5" min="0.5" type="number" asp-for="Rating" />
+        <input asp-for="Rating" max="5" min="1" type="number" required />
+    </p>
+    <p>
+        <label asp-for="MovieId">Фильм</label><br />
+        <select asp-for="MovieId">
+            @foreach (Movie m in movies)
+            {
+                <option value="@m.Id">@m.Name</option>
+            }
+        </select>
     </p>
     <p>
         <input type="submit" value="Создать" />
