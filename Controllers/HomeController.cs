@@ -17,13 +17,15 @@ namespace aspnet.Controllers
             ReviewRepository = new ReviewRepository();
             MovieRepository = new MovieRepository();
             Movies = MovieRepository.GetMany();
+            MovieModel = MovieRepository.Get(1);
         }
 
         public IActionResult Index(int? movie)
         {
+            MovieModel = MovieRepository.Get(movie ?? 1);
             ViewData["Movies"] = Movies;
             ViewData["SelectedMovie"] = MovieModel;
-            return View(ReviewRepository.GetReviews(0,10, movie ?? 0));
+            return View(ReviewRepository.GetReviews(0,500, movie ?? 0));
         }
 
         public IActionResult Create()
